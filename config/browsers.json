@@ -1,0 +1,24 @@
+{
+    "firefox": {
+        "default": "109.0",
+        "versions": {
+            "109.0": {
+                "image": "selenoid/firefox:109.0",
+                "port": "4444",
+                "path": "/wd/hub",
+                "env" : ["TZ=Europe/Berlin"]
+            }
+        }
+    },
+    "chrome": {
+        "default": "109.0",
+        "versions": {
+            "109.0": {
+                "image": "selenoid/chrome:109.0",
+                "port": "4444",
+                "path": "/",
+                "env" : ["TZ=Europe/Berlin"]
+            }
+        }
+    }
+}
