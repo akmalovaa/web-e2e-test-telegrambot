@@ -38,22 +38,22 @@ pip3 install --no-cache-dir -r requirements.txt
 docker-compose up
 ```
 
+## Для дебага:
 ```bash
 pytest -vv -q --browser_name="chrome" --alluredir=results/projects/{id}/reports
 ```
 
-## Chrome:
+Chrome:
 ```bash
 pytest -vv -q --browser_name="chrome" --alluredir=results/allure_reports
 ```
 
-## Firefox:
+Firefox:
 ```bash
 pytest -vv -q --browser_name="firefox" --alluredir=results/allure_report
 ```
 
-
-## Firefox + Chrome:
+Firefox + Chrome:
 ```bash
 pytest -n2 -vv -q --browser_name="chrome" -q --browser_name="firefox" --alluredir=results/allure_report
 ```
