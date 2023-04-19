@@ -36,15 +36,8 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     pytest.main(['-svv', '-q', '--browser_name=chrome', f'--alluredir=results/projects/{message_id}/results/', f'--message_id={message_id}'])
     # send video
     await context.bot.send_document(chat_id=update.effective_chat.id, document=f'./results/video/{message_id}.mp4')
-    # send reports
+    # send reports URL
     await context.bot.send_message(chat_id=update.effective_chat.id, text=f'{ALLURE_URL}/allure-docker-service-ui/projects/{message_id}/reports/latest')
-
-
-async def run_test(message_text, message_id):
-    # create project for allure use message id - project id
-    await requests.post("http://10.127.0.133:5050/projects", json={'id': message_id})
-    await pytest.main(['-svv', '-q', '--browser_name=chrome', '--alluredir=results/projects/101/results/', f'--message_id={message_id}'])
-    return f'{ALLURE_URL}/allure-docker-service-ui/projects/{message_id}/reports/latest'
 
 
 if __name__ == '__main__':
