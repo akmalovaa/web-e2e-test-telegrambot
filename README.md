@@ -66,6 +66,8 @@ $ pytest -n2 -vv -q --browser_name="chrome" -q --browser_name="firefox" --allure
 ## Аналоги
 
 OpenSource проекты
+
 [Testsigma](https://github.com/testsigmahq/testsigma) - шикраный проект, есть все задуманное, кроме записи видео
+
 [Salvation](https://github.com/hanwenlu2016/Salvation) - задумкая такая же, только уже продумано и сделано на django - можно сделать форк, подправить некоторые мометы и собрать в единый docker-compose
 
