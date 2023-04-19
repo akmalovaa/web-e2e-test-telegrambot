@@ -1,17 +1,16 @@
 import logging
-from telegram import Update
-from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 import test
 import time
 import subprocess
 import requests
 import json
-
 import pytest
 import sys
 import subprocess
-from selenium.webdriver.common.by import By
 import time
+from selenium.webdriver.common.by import By
+from telegram import Update
+from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 
 
 TOKEN = ''
