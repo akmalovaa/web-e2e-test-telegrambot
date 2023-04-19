@@ -55,7 +55,7 @@ pytest -vv -q --browser_name="firefox" --alluredir=results/allure_report
 
 ## Firefox + Chrome:
 ```bash
-$ pytest -n2 -vv -q --browser_name="chrome" -q --browser_name="firefox" --alluredir=results/allure_report
+pytest -n2 -vv -q --browser_name="chrome" -q --browser_name="firefox" --alluredir=results/allure_report
 ```
 
 
