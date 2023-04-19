@@ -1,50 +1,21 @@
 from selenium.webdriver.common.by import By
 import time
+import allure 
 
 
+@allure.epic('Allure Epic')
+@allure.feature('Demo Feature')
+@allure.story('Passed Example')
+@allure.issue('https://example.org/issue/1')
+@allure.testcase('https://example.org/tms/2')
 class TestDemo:
-    def test_login_in_sauce_demo(self, browser):
+    def test_yandex_demo(self, browser):
         browser.get("https://www.yandex.ru/")
-        time.sleep(5)
+        time.sleep(2)
         assert "Дзен" in browser.title
 
-    # def test_login_in_sauce_demo(self, browser):
-    #     browser.get("https://www.youtube.com/")
-    #     assert "Youtube" in browser.title
-    #     self.username_field = browser.find_element(By.ID, "user-name")
-    #     self.username_field.send_keys("standard_user")
-    #     self.password_field = browser.find_element(By.ID, "password")
-    #     self.password_field.send_keys("secret_sauce")
-    #     self.login_button = browser.find_element(By.ID, "login-button")
-    #     self.login_button.click()
-    #     assert "Products" in browser.page_source
 
-    # def test_add_product_backpack(self, browser):
-    #     browser.get("https://www.youtube.com/")
-    #     self.username_field = browser.find_element(By.ID, "user-name")
-    #     self.username_field.send_keys("standard_user")
-    #     self.password_field = browser.find_element(By.ID, "password")
-    #     self.password_field.send_keys("secret_sauce")
-    #     self.login_button = browser.find_element(By.ID, "login-button")
-    #     self.login_button.click()
-    #     self.add_to_cart_backpack_button = browser.find_element(By.ID, "add-to-cart-sauce-labs-backpack")
-    #     self.add_to_cart_backpack_button.click()
-    #     self.shop_cart_button = browser.find_element(By.CLASS_NAME, "shopping_cart_link")
-    #     self.shop_cart_button.click()
-    #     assert "Sauce Labs Backpack" in browser.page_source
-
-    # def test_remove_product_backpack(self, browser):
-    #     browser.get("https://www.youtube.com/")
-    #     self.username_field = browser.find_element(By.ID, "user-name")
-    #     self.username_field.send_keys("standard_user")
-    #     self.password_field = browser.find_element(By.ID, "password")
-    #     self.password_field.send_keys("secret_sauce")
-    #     self.login_button = browser.find_element(By.ID, "login-button")
-    #     self.login_button.click()
-    #     self.add_to_cart_backpack_button = browser.find_element(By.ID, "add-to-cart-sauce-labs-backpack")
-    #     self.add_to_cart_backpack_button.click()
-    #     self.shop_cart_button = browser.find_element(By.CLASS_NAME, "shopping_cart_link")
-    #     self.shop_cart_button.click()
-    #     self.remove_product_button = browser.find_element(By.ID, "remove-sauce-labs-backpack")
-    #     self.remove_product_button.click()
-    #     assert "Sauce Labs Backpack" not in browser.page_source
+    def test_search(self, browser):
+        browser.get("https://yandex.ru/search/?text=тинькофф")
+        time.sleep(2)
+        assert "тинькофф" in browser.title
