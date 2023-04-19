@@ -10,7 +10,7 @@ services:
       - "$PWD/config:/etc/selenoid"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "$PWD/results/video:/opt/selenoid/video/"
-      - "$PWD/results/logs:/opt/selenoid/logs/"
+      - "$PWD/results/log:/opt/selenoid/logs/"
     environment:
       - "OVERRIDE_VIDEO_OUTPUT_DIR=$PWD/results/video"
   
@@ -22,6 +22,26 @@ services:
     ports:
       - "8080:8080"
     command: ["--selenoid-uri", "http://selenoid:4444"]
+  
+  allure:
+    image: "frankescobar/allure-docker-service"
+    environment:
+      CHECK_RESULTS_EVERY_SECONDS: 1
+      KEEP_HISTORY: 1
+    ports:
+      - "5050:5050"
+    volumes:
+      - ${PWD}/results/allure_results:/app/allure-results
+      - ${PWD}/results/allure_reports:/app/default-reports
+      - ${PWD}/results/projects:/app/projects
+  
+  allure-ui:
+    image: "frankescobar/allure-docker-service-ui"
+    environment:
+      ALLURE_DOCKER_PUBLIC_API_URL: "http://10.127.0.133:5050"
+      ALLURE_DOCKER_PUBLIC_API_URL_PREFIX: ""
+    ports:
+      - "80:5252"
   
   chrome:
     image: "selenoid/vnc_chrome:110.0"
