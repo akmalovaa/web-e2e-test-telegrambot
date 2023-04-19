@@ -21,9 +21,11 @@ logging.basicConfig(
     level=logging.INFO
 )
 
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="Web E2E test bot started")
 
+    
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     fetch_url = str(update.message.text)
     message_id = str(update.message.id)
@@ -49,5 +51,6 @@ if __name__ == '__main__':
     application.add_handler(echo_handler)
 
     application.run_polling()
+
 
 updater.start_polling()
