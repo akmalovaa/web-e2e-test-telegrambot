@@ -4,8 +4,8 @@ from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, Messa
 import test
 import time
 import subprocess
-
-TOKEN = ''
+import requests
+import json
 
 import pytest
 import sys
@@ -13,7 +13,9 @@ import subprocess
 from selenium.webdriver.common.by import By
 import time
 
-# subprocess.Popen(['pytest', '-vv', '-q', '--browser_name=chrome', '--alluredir=results/allure_report']) #  -vv -q --browser_name="chrome" --alluredir=results/allure_report
+
+TOKEN = ''
+ALLURE_URL = 'http://10.127.0.133'
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -21,16 +23,29 @@ logging.basicConfig(
 )
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
+    await context.bot.send_message(chat_id=update.effective_chat.id, text="Web E2E test bot started")
 
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     fetch_url = str(update.message.text)
     message_id = str(update.message.id)
     result = f'Check: {fetch_url} id: {message_id}'
     await context.bot.send_message(chat_id=update.effective_chat.id, text=result)
-    # subprocess.run(['pytest' '-vv' '-q' '--browser_name="chrome"' '--alluredir=results/allure_report'])
-    time.sleep(3)
-    await context.bot.send_document(chat_id=update.effective_chat.id, document=f'/root/selenoid-seleniumwire/video/{message_id}.mp4')
+    # create new project Allure
+    requests.post(f"{ALLURE_URL}:5050/projects", headers={'Content-Type': 'application/json'}, json={'id': message_id})
+    # run pytest
+    pytest.main(['-svv', '-q', '--browser_name=chrome', f'--alluredir=results/projects/{message_id}/results/', f'--message_id={message_id}'])
+    # send video
+    await context.bot.send_document(chat_id=update.effective_chat.id, document=f'./results/video/{message_id}.mp4')
+    # send reports
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=f'{ALLURE_URL}/allure-docker-service-ui/projects/{message_id}/reports/latest')
+
+
+async def run_test(message_text, message_id):
+    # create project for allure use message id - project id
+    await requests.post("http://10.127.0.133:5050/projects", json={'id': message_id})
+    await pytest.main(['-svv', '-q', '--browser_name=chrome', '--alluredir=results/projects/101/results/', f'--message_id={message_id}'])
+    return f'{ALLURE_URL}/allure-docker-service-ui/projects/{message_id}/reports/latest'
+
 
 if __name__ == '__main__':
     application = ApplicationBuilder().token(TOKEN).build()

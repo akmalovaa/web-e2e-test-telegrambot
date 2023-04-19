@@ -31,8 +31,6 @@ services:
     ports:
       - "5050:5050"
     volumes:
-      - ${PWD}/results/allure_results:/app/allure-results
-      - ${PWD}/results/allure_reports:/app/default-reports
       - ${PWD}/results/projects:/app/projects
   
   allure-ui:

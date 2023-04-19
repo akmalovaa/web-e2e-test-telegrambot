@@ -1,94 +1,65 @@
 # Telegram bot web E2E тестирование
 Cервис для анализа свойств и корректности работоспособности сервисов и услуг, доступных через web-интерфейс
 
-[Demo video](https://github.com/akmalovaa/web_e2e_test_telegrambot/blob/main/demo.mp4)
+[Demo video](https://github.com/akmalovaa/web_e2e_test_telegrambot/blob/main/demo.mp4) (на видео без отправки отчетов, на текущий момент есть возможность отправлять Allure отчеты)
 
 ## Концепция:
-Данный сервис дает возможность отправить ссылку на web-приложение, описать сценарий тестирования и прикрепить тесты, а на выходе получить журнал и видеозапись с взаимодействием тестов и страниц web-приложения.
+Данный сервис дает возможность отправить ссылку на web-приложение, описать сценарий тестирования, а на выходе получить отчеты и видеозапись с взаимодействием тестов и страниц web-приложения.
 
 
-## Что нужно сделать:
-- На данный момент за прием и выполнение отвечает телеграм бот в планах перевести на web front
-- Использование Allure для вывода отчетов
-- Углубление в pytest для более функционального web тестирования
+## Что нужно доделать:
+- для telegram бота сделать отдельный контейнер + poetry
+- web front лучше чем телеграм бот (лучше переписать на django)
+- pytest нормальные тесты и возможность принимать раличные тест кейсы
 
-## Дополнительно
-
-
-- Apache License 2.0
-- Docker-compose
-- Скорость работы 
-- Масштабируемость 
-- Простота поддержки
-- Читаемость тестов
+## Под капотом
+- Pystest
+- Allure
+- Selenium 4
+- Python-telegram-bot
 
 
+## Запуск
 
-- Frameworks:
-    - Pystest
-    - Allure
-    - Selenium 4
-
-
-## Getting Started
-Creat a virtual environment:
 
 ```bash
-$ python -m venv venv
-$ source venv/bin/activate
+python -m venv venv
+source venv/bin/activate
 ```
 
-Install dependencies:
+## Зависимости
 
 ```bash
-$ pip3 install --no-cache-dir -r requirements.txt
+pip3 install --no-cache-dir -r requirements.txt
 ```
 
-## Start Selenoid Server:
+## Запуск сервисов:
 ```bash
-$ docker-compose up
+docker-compose up
 ```
 
-## To run tests in Chrome and Firefox Browser:
 ```bash
-$ pytest -vv -q --browser_name="chrome" -q --browser_name="firefox" --alluredir=results/allure_report
+pytest -vv -q --browser_name="chrome" --alluredir=results/projects/{id}/reports
 ```
 
-## To run tests in Chrome Browser:
+## Chrome:
 ```bash
-$ pytest -vv -q --browser_name="chrome" --alluredir=results/allure_report
+pytest -vv -q --browser_name="chrome" --alluredir=results/allure_reports
 ```
 
-## To run tests in Firefox Browser:
+## Firefox:
 ```bash
-$ pytest -vv -q --browser_name="firefox" --alluredir=results/allure_report
+pytest -vv -q --browser_name="firefox" --alluredir=results/allure_report
 ```
 
-## To run tests in local Chrome Browser:
-```bash
-$ pytest -vv -q --browser_name="local" --alluredir=results/allure_report
-```
 
-## To run tests in parallel mode:
-To run more than one test simultaneously, just add the **-n** parameter informing the maximum number of tests to be run simultaneously, the maximum possible number is limited by the number of threads that the processor has to run the tests.
-For example to run 2 tests at the same time in chrome and firefox:
+## Firefox + Chrome:
 ```bash
 $ pytest -n2 -vv -q --browser_name="chrome" -q --browser_name="firefox" --alluredir=results/allure_report
 ```
 
 
-## Reports
-> You must have the allure client installed
+## Отчеты Allure
 
-Run the command below to generate the test report:
-
-```bash
-$ allure generate --clean results/allure_report -o results/allure_result 
-```
-
-To view the report in the browser:
-
-```bash
-$ allure open results/allure_result
-```
+Использовать API документация http://allure:5050
 

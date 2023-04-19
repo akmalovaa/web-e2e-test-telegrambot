@@ -8,11 +8,11 @@ import pytest
 from selenium import webdriver
 
 # "videoCodec": "mpeg4",
-@pytest.fixture(scope="function", autouse=True)
-def browser(browser_name, request):
+@pytest.fixture(scope="function")
+def browser(browser_name, request, message_id):
     selenoid_options = {"enableVNC": False,
                         "enableVideo": True,
-                        "videoName": f'{request.node.nodeid}.mp4',
+                        "videoName": f'{message_id}.mp4',
                         "enableLog": False}
     if browser_name == "chrome":
         browser_options = webdriver.ChromeOptions()
@@ -48,11 +48,20 @@ def pytest_addoption(parser):
         default=[],
         help="list of browser to pass to test functions",
     )
+    parser.addoption(
+        "--message_id",
+        action="append",
+        default=[],
+        help="telegram message id",
+    )
+
 
 
 def pytest_generate_tests(metafunc):
     if "browser_name" in metafunc.fixturenames:
         metafunc.parametrize("browser_name", metafunc.config.getoption("browser_name"))
+    if "message_id" in metafunc.fixturenames:
+        metafunc.parametrize("message_id", metafunc.config.getoption("message_id"))
 
 # it is this function that takes the screenshot in case of failures
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
